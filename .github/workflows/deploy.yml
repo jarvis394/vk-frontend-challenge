@@ -25,6 +25,8 @@ jobs:
 
       - name: Build
         run: bun run build
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
