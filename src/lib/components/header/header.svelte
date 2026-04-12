@@ -5,10 +5,9 @@
 </script>
 
 {#snippet headerButton(title: string, href: RouteId)}
-	{@const resolvedHref = resolve(href)}
 	<a
-		class={['text-md p-5 px-6 select-none', resolvedHref === page.url.pathname && 'bg-primary-600']}
-		href={resolvedHref}
+		class={['text-md p-5 px-6 select-none', page.route.id === href && 'bg-primary-600']}
+		href={resolve(href)}
 	>
 		{title}
 	</a>
