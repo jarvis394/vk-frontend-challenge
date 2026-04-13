@@ -29,6 +29,10 @@
 	})
 </script>
 
+<svelte:head>
+	<title>Котики</title>
+</svelte:head>
+
 {#if query.isLoading}
 	<SkeletonGrid />
 {:else if query.isError}

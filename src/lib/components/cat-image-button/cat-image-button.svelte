@@ -64,10 +64,12 @@
 		@apply border-[0.5px] border-black/3;
 	}
 
-	.cat-image-button:focus-visible,
-	.cat-image-button:focus-within,
 	.cat-image-button:hover {
 		@apply scale-105 shadow-md [&>.like-button]:opacity-100;
+	}
+
+	.cat-image-button:focus-within {
+		@apply shadow-md [&>.like-button]:opacity-100;
 	}
 
 	.cat-image-button[data-favorite='true'] {
@@ -79,6 +81,6 @@
 		@apply absolute cursor-pointer overflow-hidden rounded-full p-3 text-red-500 opacity-0 drop-shadow-sm transition-all duration-200;
 		@apply hover:bg-red-500/12;
 		@apply active:bg-red-500/32 active:duration-50;
-		@apply focus-visible:bg-red-500/32 focus-visible:outline-0;
+		@apply outline-0 focus-visible:bg-red-500/32;
 	}
 </style>

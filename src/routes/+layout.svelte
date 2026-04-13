@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../styles/layout.css'
-	import favicon from '$lib/assets/favicon.svg'
 	import { API_URL } from '$lib/config/constants'
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 	import Header from '$lib/components/header/header.svelte'
@@ -12,7 +11,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href={API_URL} />
 	<title>Котики</title>
 </svelte:head>
