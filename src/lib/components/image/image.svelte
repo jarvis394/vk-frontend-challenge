@@ -43,7 +43,7 @@
 	<div
 		{...otherContainerProps}
 		class={cn(
-			'relative inline-flex h-auto max-w-full cursor-pointer flex-col items-center justify-center overflow-hidden bg-black/3 align-middle transition-opacity',
+			'relative inline-flex h-auto max-w-full cursor-pointer flex-col items-center justify-center overflow-hidden bg-black/3 align-middle transition-opacity select-none',
 			containerClasses,
 			{ 'cursor-default': disableZoom }
 		)}

@@ -5,7 +5,7 @@
 	import { Grid } from '$lib/components/grid'
 	import SkeletonGrid from '$lib/components/skeleton-grid/skeleton-grid.svelte'
 
-	const favorites = liveQuery(() => db.favorites.toArray())
+	const favorites = liveQuery(() => db.favorites.orderBy('favoritedAt').reverse().toArray())
 </script>
 
 <svelte:head>

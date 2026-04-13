@@ -6,8 +6,8 @@ export class CatDatabase extends Dexie {
 
 	constructor() {
 		super('CatDatabase')
-		this.version(1).stores({
-			favorites: 'id'
+		this.version(2).stores({
+			favorites: 'id, favoritedAt'
 		})
 	}
 }

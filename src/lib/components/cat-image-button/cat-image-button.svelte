@@ -5,13 +5,14 @@
 	import HeartFilled from '../svg/heart-filled.svelte'
 	import { db } from '$lib/db'
 	import { liveQuery } from 'dexie'
+	import type { HTMLAttributes } from 'svelte/elements'
+	import { cn } from '$lib/utils'
 
 	type CatImageButtonProps = {
 		data: Awaited<ReturnType<TheCatAPI['images']['searchImages']>>[number]
-	}
+	} & HTMLAttributes<HTMLElement>
 
-	let { data }: CatImageButtonProps = $props()
-
+	const { data, class: className, ...rest }: CatImageButtonProps = $props()
 	let isFavorite = $state(false)
 
 	$effect(() => {
@@ -28,12 +29,15 @@
 		if (isFavorite) {
 			await db.favorites.delete(data.id)
 		} else {
-			await db.favorites.add($state.snapshot(data))
+			await db.favorites.add({
+				...$state.snapshot(data),
+				favoritedAt: Date.now()
+			})
 		}
 	}
 </script>
 
-<div class="cat-image-button">
+<div {...rest} class={cn('cat-image-button', className)} data-favorite={isFavorite}>
 	<Image
 		src={data.url}
 		height={data.height}
@@ -44,7 +48,7 @@
 	/>
 	<button class="like-button" onclick={handleLike} aria-label="Like" title="Like">
 		{#if isFavorite}
-			<HeartFilled class="size-6" />
+			<HeartFilled class="animate-fade size-6" />
 		{:else}
 			<Heart class="size-6" />
 		{/if}
@@ -56,12 +60,25 @@
 
 	.cat-image-button {
 		@apply relative aspect-square size-full cursor-pointer overflow-hidden rounded-sm bg-white text-black transition-all duration-200;
-		@apply hover:scale-105 hover:shadow-md hover:[&>.like-button]:opacity-100;
+		@apply is-touch:[&>.like-button]:opacity-100;
+		@apply border-[0.5px] border-black/3;
+	}
+
+	.cat-image-button:focus-visible,
+	.cat-image-button:focus-within,
+	.cat-image-button:hover {
+		@apply scale-105 shadow-md [&>.like-button]:opacity-100;
+	}
+
+	.cat-image-button[data-favorite='true'] {
+		@apply [&>.like-button]:opacity-100;
 	}
 
 	.like-button {
-		@apply absolute right-3 bottom-3 cursor-pointer overflow-hidden rounded-full p-3 text-red-500 opacity-0 drop-shadow-sm transition-all duration-200;
+		@apply right-2 bottom-2 sm:right-3 sm:bottom-3;
+		@apply absolute cursor-pointer overflow-hidden rounded-full p-3 text-red-500 opacity-0 drop-shadow-sm transition-all duration-200;
 		@apply hover:bg-red-500/12;
 		@apply active:bg-red-500/32 active:duration-50;
+		@apply focus-visible:bg-red-500/32 focus-visible:outline-0;
 	}
 </style>
